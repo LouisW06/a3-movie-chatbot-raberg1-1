@@ -1,9 +1,3 @@
-# Important variables:
-#     movie_db: list of 4-tuples (imported from movies.py)
-#     pa_list: list of pattern-action pairs (queries)
-#       pattern - strings with % and _ (not consecutive)
-#       action  - return list of strings
-
 # THINGS TO ASK THE MOVIE CHAT BOT:
 # what movies were made in _ (must be date, because we don't have location)
 # what movies were made between _ and _
@@ -17,12 +11,12 @@
 # in what movies did % appear
 # bye
 
-#  Include the movie database, named movie_db
+print("start")
 from movies import movie_db
 from match import match
 from typing import List, Tuple, Callable, Any
 
-# The projection functions, that give us access to certain parts of a "movie" (a tuple)
+
 def get_title(movie: Tuple[str, str, int, List[str]]) -> str:
     return movie[0]
 
@@ -30,9 +24,6 @@ def get_title(movie: Tuple[str, str, int, List[str]]) -> str:
 
 def get_director(movie: Tuple[str, str, int, List[str]]) -> str:
     return movie[1]
-
-# for movie in movie_db:
-#     print(get_director(movie))
 
 def get_year(movie: Tuple[str, str, int, List[str]]) -> int:
     return movie[2]
@@ -57,13 +48,12 @@ def title_by_year(matches: List[str]) -> List[str]:
     Returns:
         a list of movie titles made in the passed in year
     """
+    print("yo")
     results = []
-    # print(matches)
     for movie in movie_db:
+        print(movie)
         if int(matches[0]) == get_year(movie):
-            # print(get_title(movie))
             results.append(get_title(movie))
-    # print(results)
     return results
 
 def title_by_year_range(matches: List[str]) -> List[str]:
@@ -80,12 +70,9 @@ def title_by_year_range(matches: List[str]) -> List[str]:
         in ["1991", "1994"] you will get movies made in 1991, 1992, 1993 & 1994)
     """
     results = []
-    # print(matches)
     for movie in movie_db:
         if int(matches[0]) <= get_year(movie) <= int(matches[1]):
-            # print(get_title(movie))
             results.append(get_title(movie))
-    # print(results)
     return results
 
 
@@ -101,12 +88,9 @@ def title_before_year(matches: List[str]) -> List[str]:
         pass in 1992 you won't get any movies made that year, only before)
     """
     results = []
-    # print(matches)
     for movie in movie_db:
         if get_year(movie) < int(matches[0]):
-            # print(get_title(movie))
             results.append(get_title(movie))
-    # print(results)
     return results
 
 
@@ -122,12 +106,9 @@ def title_after_year(matches: List[str]) -> List[str]:
         pass in 1992 you won't get any movies made that year, only after)
     """
     results = []
-    # print(matches)
     for movie in movie_db:
         if get_year(movie) > int(matches[0]):
-            # print(get_title(movie))
             results.append(get_title(movie))
-    # print(results)
     return results
 
 
@@ -144,7 +125,6 @@ def director_by_title(matches: List[str]) -> List[str]:
     for movie in movie_db:
         if get_title(movie) == matches[0]:
             results.append(get_director(movie))
-    # print(results)
     return results
 
 
@@ -161,7 +141,6 @@ def title_by_director(matches: List[str]) -> List[str]:
     for movie in movie_db:
         if get_director(movie) == matches[0]:
             results.append(get_title(movie))
-    # print(results)
     return results
 
 
@@ -178,7 +157,6 @@ def actors_by_title(matches: List[str]) -> List[str]:
     for movie in movie_db:
         if get_title(movie) == matches[0]:
             results = get_actors(movie)
-    # print(results)
     return results
 
 
@@ -195,7 +173,6 @@ def year_by_title(matches: List[str]) -> List[int]:
     for movie in movie_db:
         if get_title(movie) == matches[0]:
             results.append(get_year(movie))
-    # print(results)
     return results
 
 
@@ -212,11 +189,10 @@ def title_by_actor(matches: List[str]) -> List[str]:
     for movie in movie_db:
         if matches[0] in get_actors(movie):
             results.append(get_title(movie))
-    # print(results)
     return results
 
 
-# dummy argument is ignored and doesn't matter
+
 def bye_action(dummy: List[str]) -> None:
     raise KeyboardInterrupt
 
@@ -257,7 +233,6 @@ def search_pa_list(src: List[str]) -> List[str]:
         mat = match(pat, src)
         if mat is not None:
             answer = act(mat)
-            # print(answer)
             return answer if answer else ["No answers"]   
     return ["I don't understand"]
 
@@ -281,9 +256,7 @@ def query_loop() -> None:
     print("\nSo long!\n")
 
 
-# uncomment the following line once you've written all of your code and are ready to try
-# it out. Before running the following line, you should make sure that your code passes
-# the existing asserts.
+
 query_loop()
 
 if __name__ == "__main__":

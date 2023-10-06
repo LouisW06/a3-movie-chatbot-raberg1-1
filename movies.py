@@ -434,5 +434,16 @@ movie_db: List[Tuple[str, str, int, List[str]]] = [
             "delroy lindo",
             "spike lee",
         ],
+    ),
+    (
+        "jurassic park",
+        "steven speilberg",
+        1993,
+        [
+            "laura dern",
+            "jeff goldblum",
+            "sam neill",
+            "richard attenborough",
+        ],
     )
 ]
