@@ -37,6 +37,22 @@ def get_actors(movie: Tuple[str, str, int, List[str]]) -> List[str]:
 # according to the action and the argument. It is important that each function returns a
 # list of the answer(s) and not just the answer itself.
 
+def title_by_year_2(matches: List[str]) -> List[str]:
+    """Finds all movies made in the passed in year
+
+    Args:
+        matches - a list of 1 string, just the year. Note that this year is passed as a
+            string and should be converted to an int
+
+    Returns:
+        a list of movie titles made in the passed in year
+    """
+    results = []
+    for movie in movie_db:
+        if int(matches[0]) == get_year(movie):
+            results.append(get_title(movie))
+    return results
+
 
 def title_by_year(matches: List[str]) -> List[str]:
     """Finds all movies made in the passed in year
@@ -201,6 +217,7 @@ def bye_action(dummy: List[str]) -> None:
 # pattern and action It must be declared here, after all of the function definitions
 pa_list: List[Tuple[List[str], Callable[[List[str]], List[Any]]]] = [
     (str.split("what movies were made in _"), title_by_year),
+    (str.split("what movies came out in _"), title_by_year_2),
     (str.split("what movies were made between _ and _"), title_by_year_range),
     (str.split("what movies were made before _"), title_before_year),
     (str.split("what movies were made after _"), title_after_year),
@@ -261,6 +278,7 @@ query_loop()
 
 if __name__ == "__main__":
     assert isinstance(title_by_year(["1974"]), list), "title_by_year not returning a list"
+    assert isinstance(title_by_year_2(["1992"]), list), "title_by_year_2 not returning a list"
     assert isinstance(title_by_year_range(["1970", "1972"]), list), "title_by_year_range not returning a list"
     assert isinstance(title_before_year(["1950"]), list), "title_before_year not returning a list"
     assert isinstance(title_after_year(["1990"]), list), "title_after_year not returning a list"
